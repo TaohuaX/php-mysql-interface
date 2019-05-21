@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>新闻管理系统</title>
+    <script src="https://cdn.bootcss.com/jquery/1.12.3/jquery.js"></script>
+    <style>
+        .content span{
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class = "content">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <input type="button" value="删除">
+    </div>
+    <div>
+        <label>新闻标题</label>
+        <input type="text" id="newstitle">
+    </div>
+    <div>
+        <label>新闻内容</label>
+        <input type="text" id="newscontent">
+    
+    </div>
+    <div>
+        <label>新闻描述</label>
+        <input type="text" id="newsdesc">
+    </div>
+    <div>
+        <input type="button" value="增加" id="btn">
+    </div>
+</body>
+<script>
+    $.ajax({
+        url: 'interface/getdata.php',
+        jsonType: 'json',
+        type: 'post',
+        data: {},
+        success: function (data) {
+            var result = JSON.parse(data)
+            if (result.errcode === '1') {
+                var str = '';
+                for (var i = 0; i < result.data.length; i++) {
+                    str += '<div><span>'+result.data[i]['id']+'</span><span>'+result.data[i]['newsname']+'</span>'+
+                    '<span>'+result.data[i]['newscontent']+'</span><span>'+result.data[i]['newsdesc']+'</span>'+
+                    '<input type="button" value="删除" newsid='+result.data[i]['id']+' class="delete" style="margin-right: 20px"><input type="button" value="编辑" newsid='+result.data[i]['id']+' class="edit"></div>';
+                }
+                $('.content').html(str)
+            } else {
+                alert(result.msg);
+            }
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    })
+    $("#btn").click(function () {
+        editData({
+            id: '',
+            newsname: $('#newstitle').val(),
+            newscontent: $('#newscontent').val(),
+            newsdesc: $('#newsdesc').val()
+        })
+    })
+    $('.content').on('click', '.edit', function () {
+        var _self = $(this);
+        editData({
+            id: _self.attr('newsid'),
+            newsname: $('#newstitle').val(),
+            newscontent: $('#newscontent').val(),
+            newsdesc: $('#newsdesc').val()
+        })
+    })
+    $('.content').on('click', '.delete', function () {
+        var _self = $(this);
+        $.ajax({
+            url: 'interface/deletnews.php',
+            jsonType: 'json',
+            type: 'post',
+            data: {
+                id: _self.attr('newsid')
+            },
+            success: function (data) {
+                var result = JSON.parse(data)
+                if (result.errcode === '1') {
+                    getData();
+                } else {
+                    alert(result.msg);
+                }
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        })
+    })
+    function editData (param) {
+        $.ajax({
+            url: 'interface/addnews.php',
+            jsonType: 'json',
+            type: 'post',
+            data: param,
+            success: function (data) {
+                console.log(data)
+                var result = JSON.parse(data)
+                if (result.errcode === '1') {
+                    getData();
+                } else {
+                    alert(result.msg);
+                }
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        })
+    }
+    function getData () {
+        $.ajax({
+            url: 'interface/getdata.php',
+            jsonType: 'json',
+            type: 'post',
+            data: {},
+            success: function (data) {
+                var result = JSON.parse(data)
+                if (result.errcode === '1') {
+                    var str = '';
+                    for (var i = 0; i < result.data.length; i++) {
+                        str += '<div><span>'+result.data[i]['id']+'</span><span>'+result.data[i]['newsname']+'</span>'+
+                        '<span>'+result.data[i]['newscontent']+'</span><span>'+result.data[i]['newsdesc']+'</span><input type="button" value="删除" newsid='+result.data[i]['id']+' class="delete"></div>';
+                    }
+                    $('.content').html(str)
+                } else {
+                    alert(result.msg);
+                }
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        })
+    }
+</script>
+</html>
