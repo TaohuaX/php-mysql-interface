@@ -32,27 +32,17 @@
     </div>
 </body>
 <script>
+    getData();
     $.ajax({
-        url: 'interface/getdata.php',
+        url: '../test.php',
         jsonType: 'json',
         type: 'post',
         data: {},
         success: function (data) {
-            var result = JSON.parse(data)
-            if (result.errcode === '1') {
-                var str = '';
-                for (var i = 0; i < result.data.length; i++) {
-                    str += '<div><span>'+result.data[i]['id']+'</span><span>'+result.data[i]['newsname']+'</span>'+
-                    '<span>'+result.data[i]['newscontent']+'</span><span>'+result.data[i]['newsdesc']+'</span>'+
-                    '<input type="button" value="删除" newsid='+result.data[i]['id']+' class="delete" style="margin-right: 20px"><input type="button" value="编辑" newsid='+result.data[i]['id']+' class="edit"></div>';
-                }
-                $('.content').html(str)
-            } else {
-                alert(result.msg);
-            }
+            console.log(data);
         },
         error: function (err) {
-            console.log(err)
+            console.log(err);
         }
     })
     $("#btn").click(function () {
