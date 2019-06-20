@@ -22,4 +22,7 @@ myTest.on('close', function () {
 
 myTest.init();
 myTest.close();
-
+process.on('uncaughtException', (err) => {
+        console.log('出错了')
+})
+myTest.emit('error', new error('whoops!'))
