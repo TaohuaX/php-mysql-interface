@@ -2,6 +2,5 @@
     "editor.fontFamily": "'Comic Sans Ms',Menlo, Monaco, 'Courier New', monospace",
     "editor.fontSize": 18,
 "editor.detectIndentation": false,
-"editor.tabSize": 8,
 "files.autoSave": "afterDelay"
 }
