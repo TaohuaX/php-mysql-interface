@@ -1,16 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://cdn.bootcss.com/bulma/0.7.5/css/bulma.min.css" rel="stylesheet">
+    <style>
+        .show {
+            display: block;
+        }
+    </style>
 </head>
+
 <body>
-        <h1>{{title}}</h1>
-        {{users}}
-        {{each users}}
-                <p>{{$index}} ------ {{$value.id}} ------ {{$value.name}}</p>
-        {{/each}}
+    <a class="button is-primary">增加</a>
+    <table class="table is-bordered is-hoverable is-fullwidth is-striped">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>id</th>
+                <th>姓名</th>
+                <th width=200>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{each users}}
+            <tr>
+                <td>{{$index}}</td>
+                <td>{{$value.id}}</td>
+                <td class="username">{{$value.name}}</td>
+                <td>
+                    <span class="tag is-success">编辑</span>
+                    <span class="tag is-danger del">删除</span>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <div class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">增加用户</p>
+                <button class="delete cancel" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="field">
+                    <label class="label">ID</label>
+                    <div class="control">
+                        <input class="input userid" type="text" placeholder="请输入ID">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">用户名</label>
+                    <div class="control">
+                        <input class="input username" type="text" placeholder="请输入用户名">
+                    </div>
+                </div>
+            </section>
+            <footer class="modal-card-foot" style="justify-content: center">
+                <a class="button is-rounded cancel">取消</a>
+                <a class="button is-primary is-rounded save">保存</a>
+            </footer>
+        </div>
+    </div>
 </body>
+<script>
+    const addUserTarget = document.getElementsByClassName('is-primary')[0];
+    const addUserLayer = document.getElementsByClassName('modal')[0];
+    const closeAddUserLayer = document.getElementsByClassName('cancel');
+    const addUserSaveBtn = document.getElementsByClassName('save')[0];
+    const delUserBtn = document.getElementsByClassName('del');
+    const fetchUserNaem = document.getElementsByClassName('username');
+    addUserTarget.onclick = () => addUserLayer.classList.add('show');
+    for (let i = 0; i < closeAddUserLayer.length; i++) {
+        closeAddUserLayer[i].onclick = () => addUserLayer.classList.remove('show');
+    }
+    addUserSaveBtn.onclick = () => {
+        const userId = document.getElementsByClassName('userid')[0].value;
+        const userName = document.getElementsByClassName('username')[0].value;
+        var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
+        httpRequest.open('POST', '/user/add', true); //第二步：打开连接/***发送json格式文件必须设置请求头 ；如下 - */
+        httpRequest.setRequestHeader("Content-type", "application/json");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）var obj = { name: 'zhansgan', age: 18 };
+        httpRequest.send(JSON.stringify({ id: userId, username: userName }));//发送请求 将json写入send中
+    }
+    for (let i = 0; i < closeAddUserLayer.length; i++) {
+        delUserBtn[i].onclick = () => {
+            const delusername = fetchUserNaem[i].innerHTML;
+            var httpRequest = new XMLHttpRequest();
+            httpRequest.open('POST', '/user/del', true);
+            httpRequest.setRequestHeader("Content-type", "application/json");
+            httpRequest.send(JSON.stringify({ username: delusername }));
+        };
+    }
+</script>
+
 </html>
