@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>多行显示省略号</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .line li {
+            width: 120px;
+            box-shadow: inset 0 -1px 1px #000;
+            background: #fff;
+            margin-left: -1px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .line li::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            border: 1px solid #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="line">
+        <li>box-shadow</li>
+        <li>box-shadow</li>
+        <li>box-shadow</li>
+    </ul>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>实现文字两端对齐</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        /* 方法一 */
+        /* .item-attr{
+            display: inline-block;
+            min-width: 100px;
+            text-align: justify;
+            vertical-align: top;
+            text-align-last: justify;
+        } */
+        /* 方法二 */
+            .item-attr{
+                display: inline-block;
+                min-width: 100px;
+                text-align: justify;
+                vertical-align: top;
+                height: 100%;
+            }
+            .item-attr::after{
+                display: inline-block;
+                width: 100%;
+                content: ' ';
+                height: 0;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="item-list">
+        <span class="item-attr">姓名</span>:
+        <span class="item-val">小王</span>
+    </div>
+    <div class="item-list">
+        <span class="item-attr">出生年月</span>:
+        <span class="item-val">1994-01</span>
+    </div>
+    <div class="item-list">
+        <span class="item-attr">性别</span>:
+        <span class="item-val">女</span>
+    </div>
+</body>
+
+</html>

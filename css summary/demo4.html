@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>多行显示省略号</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 一 */
+        .demo_line_01 {
+            width: 200px;
+            padding: 0 10px 0;
+            margin: 20px 0;
+            line-height: 1px;
+            border-left: 200px solid #ddd;
+            border-right: 200px solid #ddd;
+            text-align: center;
+        }
+
+        /* 二 */
+        .demo_line_02 {
+            height: 1px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .demo_line_02 span {
+            position: relative;
+            top: -12px;
+            background: #fff;
+            padding: 0 20px;
+        }
+
+        /* 三 */
+        .demo_line_03 {
+            width: 600px;
+        }
+
+        .demo_line_03 b {
+            background: #ddd;
+            margin-top: 4px;
+            display: inline-block;
+            width: 180px;
+            height: 1px;
+            _overflow: hidden;
+            vertical-align: middle;
+        }
+
+        .demo_line_03 span {
+            display: inline-block;
+            width: 220px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <p class="demo_line_01">我是分割线</p>
+
+    <div class="demo_line_02">
+        <span>测试一哈</span>
+    </div>
+
+    <div class="demo_line_03">
+        <b></b>
+        <span>测试一哈</span>
+        <b></b>
+    </div>
+</body>
+
+</html>

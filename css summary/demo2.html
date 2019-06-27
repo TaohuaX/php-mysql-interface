@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>多行显示省略号</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        /* 单行显示省略号 */
+        /* p{
+            width: 200px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        } */
+        /* 多行显示省略号 */
+        /* p{
+            width: 150px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+        } */
+        /* 方法三 */
+        p {
+            width: 200px;
+            position: relative;
+            line-height: 20px;
+            max-height: 60px;
+            overflow: hidden;
+        }
+
+        p::after {
+            content: "...";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            padding-left: 40px;
+            background: -webkit-linear-gradient(left, transparent, #fff 55%);
+            background: -o-linear-gradient(right, transparent, #fff 55%);
+            background: -moz-linear-gradient(right, transparent, #fff 55%);
+            background: linear-gradient(to right, transparent, #fff 55%);
+        }
+    </style>
+</head>
+
+<body>
+    <p>如果实现单行文本的溢出显示省略号同学们应该都知道用text-overflow:ellipsis属性来，当然还需要加宽度width属来兼容部分浏览。</p>
+</body>
+
+</html>
